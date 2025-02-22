@@ -2,7 +2,6 @@ package io.proj3ct.DemoBot.service;
 
 import io.proj3ct.DemoBot.config.BotConfig;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -35,17 +34,14 @@ public class TelegramBot extends TelegramLongPollingBot {
 
             switch (messageText) {
                 case "/start":
-                    try {
-                        startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
-                    } catch (TelegramApiException e) {
-                        throw new RuntimeException(e);
-                    }
+                    startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
+                    break;
                 default: sendMessage(chatId, "Sorry command was not recognized");
             }
         }
     }
 
-    private void startCommandReceived(long chatId, String name) throws TelegramApiException {
+    private void startCommandReceived(long chatId, String name) {
         String answer = String.format("Hi, %s, nice to meet you!", name);
 
         sendMessage(chatId, answer);
